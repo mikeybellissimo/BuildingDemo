@@ -86,7 +86,7 @@ class Extractor:
 
     def extract(user_input, state):
         requested_data_prefix = ""
-        if state.is_first == True:
+        if state.next_missing_data == None:
             examples = [
                 (
                     "A blue 4 story hotel with 804 rooms",

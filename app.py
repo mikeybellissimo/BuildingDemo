@@ -13,6 +13,7 @@ if "messages" not in st.session_state:
     
     st.session_state.messages = []
     st.session_state.is_first = True
+    st.session_state.next_missing_data = None
     st.session_state.data = {}
 
 # Display chat messages from history on app rerun
@@ -38,23 +39,21 @@ if prompt := st.chat_input("What is up?"):
     
     
     st.session_state.is_first = False
-    
+
     # Display assistant response in chat message container
     # with st.chat_message("assistant"):
     #     st.markdown(response)
     # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    #st.session_state.messages.append({"role": "assistant", "content": response})
     
         
 
 if st.session_state.is_first == False:
     
     next_missing_data = Extractor.find_next_missing_data(st.session_state.data)
-    print("This is data")
-    print(st.session_state.data)
-    print(next_missing_data)
+    
     if next_missing_data == None:
-        st.markdown("This is one complete ass building my guy.")
+        st.markdown("Building has all required information.")
         st.write(pd.DataFrame({'Fields' : st.session_state.data.keys(), "Values" : st.session_state.data.values()}).set_index("Fields"))
     else:
         with st.chat_message("assistant"):
